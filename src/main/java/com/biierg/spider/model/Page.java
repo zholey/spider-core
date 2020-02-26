@@ -8,9 +8,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.biierg.spider.tags.Body;
-import com.biierg.spider.tags.Head;
-
 /**
  * 页面
  * 
@@ -30,9 +27,6 @@ public class Page implements Serializable {
 	private String description; // 页面描述
 	
 	private String pageContent; // 页面内容
-	
-	private Head head; // 页头
-	private Body body; // 页面体
 	
 	// 子页面
 	private List<Page> children = new ArrayList<>();
@@ -147,34 +141,6 @@ public class Page implements Serializable {
 	 */
 	public void setPageContent(String pageContent) {
 		this.pageContent = pageContent;
-	}
-
-	/**
-	 * @return the head
-	 */
-	public Head getHead() {
-		return head;
-	}
-
-	/**
-	 * @param head the head to set
-	 */
-	public void setHead(Head head) {
-		this.head = head;
-	}
-
-	/**
-	 * @return the body
-	 */
-	public Body getBody() {
-		return body;
-	}
-
-	/**
-	 * @param body the body to set
-	 */
-	public void setBody(Body body) {
-		this.body = body;
 	}
 
 	/**

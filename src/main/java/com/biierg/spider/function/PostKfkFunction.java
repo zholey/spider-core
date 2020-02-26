@@ -13,8 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.biierg.common.json.JacksonHelper;
-import com.biierg.common.mq.IMQProducer;
+import com.biierg.spider.json.JacksonHelper;
+import com.biierg.spider.mq.IMQProducer;
 
 /**
  * 将JSON对象发送至Kafka

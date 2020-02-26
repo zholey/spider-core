@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.biierg.common.util.StringUtil;
+import com.biierg.spider.support.StringUtil;
 
 /**
  * 执行Http Get请求的函数

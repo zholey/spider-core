@@ -16,7 +16,7 @@
 	<context:property-placeholder location="file:./etc/profile.properties"/>
     
     <!-- kafka producer -->
-    <bean id="kfkProducer" class="com.biierg.common.mq.impl.KfkProducer"
+    <bean id="kfkProducer" class="com.biierg.spider.mq.impl.KfkProducer"
     	init-method="start" destroy-method="destroy">
 
         <property name="servers" value="${kafka.servers}"/>
@@ -24,7 +24,7 @@
     </bean>
     
     <!-- redis -->
-	<bean id="redisCache" class="com.biierg.common.cache.impl.BinaryCache" 
+	<bean id="redisCache" class="com.biierg.spider.cache.impl.BinaryCache" 
 		init-method="connect">
 		
 		<property name="redisHost" value="${redis.host}"></property>

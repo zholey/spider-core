@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.biierg.common.cache.ICache;
+import com.biierg.spider.cache.ICache;
 
 /**
  * 从Redis中读取JSON对象

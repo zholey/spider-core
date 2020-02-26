@@ -24,7 +24,6 @@ import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.biierg.common.util.StringUtil;
 import com.biierg.spider.model.Page;
 import com.biierg.spider.model.Site;
 import com.biierg.spider.support.JSEngineUtil;
