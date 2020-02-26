@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map enable="false">
+
+	<!-- 
+		// 容器提供的JS函数说明
+		// 
+		// HttpGet(url) : 发送Get请求
+		// HttpPost({url:'', data(optional): {}}) : 发送Post请求
+		// PostKfk(obj) : 将给定的对象发送至Kafka
+		// RedisGet(scope, key) : 从Redis中读取JSON对象
+		// RedisPut(scope, key, value) : 将指定的对象保存至Redis
+		// Log(content) : 记录日志
+	-->
+
+	<script file="../lib/utils.js"/>
+	<script file="weather-script.js"/>
+	
+	<site name="北京天气实况" 
+		content-type="json" charset="ISO-8859-1"
+		prefix="http://www.weather.com.cn/" 
+		entrance="http://d1.weather.com.cn/sk_2d/101010100.html?_=${NoCache}"
+		max-depth="1" min-period="60" max-period="600">
+		
+		<header name="Referer" value="http://www.weather.com.cn/weather1dn/101010100.shtml"/>
+		<header name="User-Agent" value="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36"/>
+		
+		<filter name="bjWeatherFilter"/>
+	</site>
+</map>
