@@ -1,6 +1,7 @@
 package com.biierg.spider;
 
 import java.io.File;
+import java.lang.management.ManagementFactory;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -10,6 +11,9 @@ import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+import javax.management.MBeanServer;
+import javax.management.ObjectName;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.slf4j.Logger;
@@ -18,6 +22,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.biierg.spider.function.JSFunction;
+import com.biierg.spider.jmx.RobotOption;
 import com.biierg.spider.model.Site;
 import com.biierg.spider.support.JSEngineUtil;
 import com.biierg.spider.support.SpiderMap;
@@ -30,9 +35,9 @@ import com.biierg.spider.support.SpiderMap;
 public class SpiderApp {
 	private static Logger logger = null;
 
-	private static ApplicationContext appContext = null;
-	private static ScheduledExecutorService executeService;
-
+	private ApplicationContext appContext = null;
+	private ScheduledExecutorService executeService;
+	
 	/**
 	 * 入口
 	 *
@@ -41,22 +46,29 @@ public class SpiderApp {
 	public static void main(String[] args) {
 		logger = initLog4j("./etc/log4j2.xml");
 
-		registerExtClasspath("/etc");
+		// enable jmx
+		MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
+		try {
+			ObjectName mbeanName = new ObjectName("com.biierg.spider.jmx:type=RobotOption");
+			final RobotOption robotOption = new RobotOption();
+			mbs.registerMBean(robotOption, mbeanName);
+		} catch (Throwable e) {
+			logger.error(e.getMessage(), e);
+		}
 		
-//		// enable jmx
-//		MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
-//		try {
-//			ObjectName mbeanName = new ObjectName("com.biierg.spider.jmx:type=RobotOption");
-//			final RobotOption robotOption = new RobotOption();
-//			mbs.registerMBean(robotOption, mbeanName);
-//		} catch (Throwable e) {
-//			logger.error(e.getMessage(), e);
-//		}
-
+		new SpiderApp().startup("/spring-context.xml");
+	}
+	
+	public void startup(String springContextLocation) {
+		
+		if (logger == null) {
+			logger = LoggerFactory.getLogger(SpiderApp.class);
+		}
+		
 		if (logger.isInfoEnabled()) {
 			logger.info("启动 爬虫 ...");
 		}
-		appContext = new ClassPathXmlApplicationContext("/spring-context.xml");
+		appContext = new ClassPathXmlApplicationContext(springContextLocation);
 
 		try {
 			Map<String, Object> jsFuncMap = appContext.getBeansWithAnnotation(JSFunction.class);
