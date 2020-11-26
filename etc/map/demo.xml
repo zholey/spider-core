@@ -4,11 +4,11 @@
 	<!-- 
 		// 容器提供的JS函数说明
 		// 
-		// HttpGet(url) : 发送Get请求
-		// HttpPost({url:'', data(optional): {}}) : 发送Post请求
-		// PostKfk(obj) : 将给定的对象发送至Kafka
-		// RedisGet(scope, key) : 从Redis中读取JSON对象
-		// RedisPut(scope, key, value) : 将指定的对象保存至Redis
+		// HttpGet({url:'', charset(optional):''}) : 发送Get请求
+		// HttpPost({url:'', data(optional): {}, charset(optional):''}) : 发送Post请求
+		// PostKfk({message:'', topic(optional):''}) : 将给定的对象发送至Kafka
+		// RedisGet({scope: '', key: ''}) : 从Redis中读取JSON对象
+		// RedisPut({scope: '', key: '', value: ''}) : 将指定的对象保存至Redis
 		// Log(content) : 记录日志
 	-->
 
@@ -19,7 +19,7 @@
 			print("采集到设备列表数据");
 			print(jsonResultStr);
 			
-			print(HttpGet("http://10.247.53.143:10010/pgiscs-web/iscs/device/listByCondition"));
+			print(HttpGet({url:"http://10.247.53.143:10010/pgiscs-web/iscs/device/listByCondition"}));
 			Log(HttpPost({
 				url: "http://10.247.53.143:10010/pgiscs-web/iscs/device/listByCondition"
 			}));

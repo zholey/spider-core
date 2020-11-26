@@ -34,8 +34,21 @@ public class PostKfkFunction implements Consumer<Bindings> {
 	@Override
 	public void accept(Bindings jsonObj) {
 
-		if (jsonObj != null) {
-			kfkProducer.send(jackson.toJson(jsonObj));
+		if (jsonObj != null && jsonObj.containsKey("message")) {
+			
+			String message = jackson.toJson(jsonObj.get("message"));
+			
+			if (jsonObj.containsKey("topic")) {
+				String topic = jsonObj.get("topic").toString();
+				
+				kfkProducer.send(topic, message);
+				
+				logger.info("PostKfk({}, {})", topic, message);
+			} else {
+				kfkProducer.send(message);
+				
+				logger.info("PostKfk({})", message);
+			}
 		} else {
 			logger.error("缺少必要的参数");
 		}

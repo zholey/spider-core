@@ -39,4 +39,9 @@ public class SimpleBridge implements IMQProducer, IMQConsumer {
 	public boolean send(Serializable msgObj) {
 		return listener.onMessage(new Message(UUIDUtil.generate32(), msgObj));
 	}
+	
+	@Override
+	public boolean send(String topic, Serializable msgObj) {
+		return listener.onMessage(new Message(UUIDUtil.generate32(), msgObj));
+	}
 }

@@ -90,16 +90,21 @@ public class KfkProducer implements IMQProducer, Serializable {
 
 	@Override
 	public boolean send(Serializable message) {
-
+		return send(topicName, message);
+	}
+	
+	@Override
+	public boolean send(String topic, Serializable message) {
+		
 		try {
-			if (message == null) {
+			if (topic == null || message == null) {
 				return true;
 			}
 			
 			if (message instanceof byte[]) {
-				producer.send(new ProducerRecord<>(topicName, UUIDUtil.generate(), (byte[]) message));
+				producer.send(new ProducerRecord<>(topic, UUIDUtil.generate(), (byte[]) message));
 			} else {
-				producer.send(new ProducerRecord<>(topicName, UUIDUtil.generate(), BeanUtils.object2Bytes(message)));
+				producer.send(new ProducerRecord<>(topic, UUIDUtil.generate(), BeanUtils.object2Bytes(message)));
 			}
 			
 			producer.flush();

@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.biierg.spider.cache.ICache;
+import com.biierg.spider.json.JacksonHelper;
 
 /**
  * 从Redis中读取JSON对象
@@ -24,7 +25,7 @@ import com.biierg.spider.cache.ICache;
 @Service("RedisGet")
 public class RedisGetFunction implements Function<Bindings, Object> {
 	private final static Logger logger = LoggerFactory.getLogger(RedisGetFunction.class);
-
+	
 	@Resource(name = "redisCache")
 	private ICache redisCache;
 
@@ -32,7 +33,13 @@ public class RedisGetFunction implements Function<Bindings, Object> {
 	public Object apply(Bindings jsonObj) {
 
 		if (jsonObj != null && jsonObj.containsKey("scope") && jsonObj.containsKey("key")) {
-			return redisCache.getObject(jsonObj.get("scope").toString(), jsonObj.get("key").toString(), Object.class);
+			
+			String scope = jsonObj.get("scope").toString();
+			String key = jsonObj.get("key").toString();
+			
+			logger.info("RedisGet({}, {})", scope, key);
+			
+			return redisCache.getObject(scope, key, Object.class);
 		} else {
 			logger.error("缺少必要的参数");
 		}

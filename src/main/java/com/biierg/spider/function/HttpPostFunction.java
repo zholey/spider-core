@@ -71,8 +71,13 @@ public class HttpPostFunction implements Function<Bindings, String> {
 
 				try (CloseableHttpClient httpclient = HttpClients.createDefault();
 						CloseableHttpResponse response = httpclient.execute(httpMethod)) {
+					
+					String defaultCharset = "UTF-8";
+					if (request.containsKey("charset")) {
+						defaultCharset = request.get("charset").toString();
+					}
 
-					return EntityUtils.toString(response.getEntity());
+					return EntityUtils.toString(response.getEntity(), defaultCharset);
 				} catch (Throwable e) {
 					logger.error("在抓取网页 {} 时出现异常 [{}]", url, e.getMessage(), e);
 				}

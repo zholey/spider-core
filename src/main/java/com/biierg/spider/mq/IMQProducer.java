@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @author lei
  */
 public interface IMQProducer {
-	
+
 	/**
 	 * 发送对象消息至消息队列
 	 * 
@@ -16,4 +16,13 @@ public interface IMQProducer {
 	 * @return
 	 */
 	public boolean send(Serializable msgObj);
+
+	/**
+	 * 发送对象消息至消息队列
+	 * 
+	 * @param topic  消息主题
+	 * @param msgObj 消息对象
+	 * @return
+	 */
+	public boolean send(String topic, Serializable msgObj);
 }

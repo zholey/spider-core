@@ -24,7 +24,7 @@
     </bean>
     
     <!-- redis -->
-	<bean id="redisCache" class="com.biierg.spider.cache.impl.BinaryCache" 
+	<bean id="redisCache" class="com.biierg.spider.cache.impl.RedisCache" 
 		init-method="connect">
 		
 		<property name="redisHost" value="${redis.host}"></property>

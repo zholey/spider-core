@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.biierg.spider.cache.ICache;
+import com.biierg.spider.json.JacksonHelper;
 
 /**
  * 将JSON对象保存至Redis
@@ -24,6 +25,8 @@ import com.biierg.spider.cache.ICache;
 @Service("RedisPut")
 public class RedisPutFunction implements Consumer<Bindings> {
 	private final static Logger logger = LoggerFactory.getLogger(RedisPutFunction.class);
+	
+	private JacksonHelper jackson = JacksonHelper.newInstance();
 
 	@Resource(name = "redisCache")
 	private ICache redisCache;
@@ -32,7 +35,14 @@ public class RedisPutFunction implements Consumer<Bindings> {
 	public void accept(Bindings jsonObj) {
 
 		if (jsonObj != null && jsonObj.containsKey("scope") && jsonObj.containsKey("key")) {
-			redisCache.put(jsonObj.get("scope").toString(), jsonObj.get("key").toString(), jsonObj.get("value"));
+			
+			String scope = jsonObj.get("scope").toString();
+			String key = jsonObj.get("key").toString();
+			Object value = jsonObj.get("value");
+			
+			redisCache.put(scope, key, value);
+			
+			logger.info("RedisPut({}, {}, {})", scope, key, jackson.toJson(value));
 		} else {
 			logger.error("缺少必要的参数");
 		}

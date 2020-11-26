@@ -6,6 +6,8 @@ package com.biierg.spider.function;
 
 import java.util.function.Function;
 
+import javax.script.Bindings;
+
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -16,8 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.biierg.spider.support.StringUtil;
-
 /**
  * 执行Http Get请求的函数
  * 
@@ -25,13 +25,14 @@ import com.biierg.spider.support.StringUtil;
  */
 @JSFunction
 @Service("HttpGet")
-public class HttpGetFunction implements Function<String, String> {
+public class HttpGetFunction implements Function<Bindings, String> {
 	private final static Logger logger = LoggerFactory.getLogger(HttpGetFunction.class);
 
 	@Override
-	public String apply(String url) {
+	public String apply(Bindings request) {
 
-		if (!StringUtil.isNull(url)) {
+		if (request != null && request.containsKey("url")) {
+			String url = request.get("url").toString();
 
 			try {
 				HttpGet httpMethod = new HttpGet(url);
@@ -52,8 +53,13 @@ public class HttpGetFunction implements Function<String, String> {
 
 				try (CloseableHttpClient httpclient = HttpClients.createDefault();
 						CloseableHttpResponse response = httpclient.execute(httpMethod)) {
+					
+					String defaultCharset = "UTF-8";
+					if (request.containsKey("charset")) {
+						defaultCharset = request.get("charset").toString();
+					}
 
-					return EntityUtils.toString(response.getEntity());
+					return EntityUtils.toString(response.getEntity(), defaultCharset);
 				} catch (Throwable e) {
 					logger.error("在抓取网页 {} 时出现异常 [{}]", url, e.getMessage(), e);
 				}
