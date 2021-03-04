@@ -66,6 +66,15 @@ var bjAlarmFilter = function(json) {
 			}
 		} else {
 			Log("无预警");
+
+			var weatherInfo = {
+					"__DATATYPE" : "ISCS_NO_ALARM",
+					"region" : "北京市"
+			};
+			
+			PostKfk({
+				message: weatherInfo
+			});
 		}
 	}
 };
