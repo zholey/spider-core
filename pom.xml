@@ -5,11 +5,11 @@
 	<parent>
 		<groupId>com.biierg.pg</groupId>
 		<artifactId>pg-parent</artifactId>
-		<version>1.8.0</version>
+		<version>1.8.2</version>
 	</parent>
 	
 	<artifactId>spider-core</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.2</version>
 	<packaging>jar</packaging>
 
 	<name>biierg-spider</name>
@@ -19,7 +19,7 @@
 		<log4j.version>2.12.1</log4j.version>
 		<spring.version>4.2.8.RELEASE</spring.version>
 		<jackson.version>2.9.5</jackson.version>
-		<kafka.version>0.10.1.1</kafka.version>
+		<kafka.version>0.10.2.2</kafka.version>
 	</properties>
 
 	<dependencies>

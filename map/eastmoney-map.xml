@@ -12,7 +12,7 @@
 		// Log(content) : 记录日志
 	-->
 
-	<script file="../lib/utils.js"/>
+	<script file="./lib/utils.js"/>
 	<script>
 	<![CDATA[
 		var dataFilter = function(jsonResultStr) {

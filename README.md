@@ -1,3 +1,24 @@
+# Spider-core
+
+> 中文名：通用爬虫引擎
+
+
+
+本程序是基于Apache HttpClient编写的爬虫引擎，支持自定义爬虫策略。程序支持JS脚本，可以通过JS脚本来对数据进行解析、查找等操作，处理完的数据，可以利用程序提供的JS函数，发送至Redis或Kafka等；
+
+
+
+## 目录/文件说明
+
+* etc/profile.properties - 环境配置文件，用本配置Redis数据库及Kafka地址信息
+* map/ - 爬早策略文件存储目录；程序自动扫描该目录，查找所有的XML文件并解析，但并不是所有的文件都会启动爬取，程序只会处理 <map enable="true"> 的文件
+* map/lib/ - 可以用来存储一些脚本文件，非必须
+
+
+
+## 策略文件样例
+
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <map enable="false">
 
@@ -12,7 +33,7 @@
 		// Log(content) : 记录日志
 	-->
 
-	<script file="../lib/utils.js"/>
+	<script file="./lib/utils.js"/>
 	<script>
 	<![CDATA[
 		var deviceListFilter = function(jsonResultStr) {
@@ -87,3 +108,10 @@
 		<filter name="neteaseFilter"/>
 	</site>
 </map>
+```
+
+
+
+## 策略文件说明
+
+首先，策略文件是一个XML格式文件，以 `map` 为根节点，其中可以包含若干个 `site` 节点和 `script` 节点。每个 `site` 节点代表一个要抓取的网站。

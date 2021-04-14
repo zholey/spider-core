@@ -1,8 +1,0 @@
-本程序是基于Apache HttpClient编写的爬虫引擎，支持自定义爬虫策略。样例配置请见  etc/map/demo.xml。
-程序支持JS脚本，可以通过JS脚本来对数据进行解析、查找等操作，处理完的数据，可以利用程序提供的JS函数，发送至Redis或Kafka等；
-
-目录/文件说明：
-etc/ - 配置文件存储目录
-etc/map/ - 爬早策略文件存储目录；程序自动扫描该目录，查找所有的XML文件并解析，但并不是所有的文件都会启动爬取，程序只会处理 <map enable="true"> 的文件
-etc/lib/ - 可以用来存储一些脚本文件，非必须
-etc/profile.properties - 环境配置文件，用本配置Redis数据库及Kafka地址信息

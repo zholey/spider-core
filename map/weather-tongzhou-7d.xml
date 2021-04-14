@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map enable="true">
 
-	<script file="../lib/utils.js"/>
-	<script file="weather-alarm.js"/>
+	<script file="./lib/utils.js"/>
+	<script file="weather-tongzhou-7d.js"/>
 	
-	<site name="北京气象预警" 
-		content-type="json" charset="ISO-8859-1"
+	<site name="通州七天天气预报" 
+		content-type="html" charset="ISO-8859-1"
 		prefix="http://www.weather.com.cn/" 
-		entrance="http://product.weather.com.cn/alarm/grepalarm_cn.php?_=${NoCache}"
-		max-depth="1" min-period="60" max-period="1800">
+		entrance="http://www.weather.com.cn/weather/101010600.shtml"
+		max-depth="1" min-period="60" max-period="600">
 		
 		<header name="Referer" value="http://www.weather.com.cn/"/>
 		<header name="User-Agent" value="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36"/>
 		
-		<filter name="bjAlarmFilter"/>
+		<filter name="tzWeatherFilter"/>
 	</site>
 </map>

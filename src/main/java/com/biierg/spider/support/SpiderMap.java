@@ -39,7 +39,7 @@ public class SpiderMap implements Serializable {
 
 	private SpiderMap() {
 
-		Path mapPath = Paths.get("./etc/map");
+		Path mapPath = Paths.get("./map");
 
 		if (Files.exists(mapPath)) {
 			try {
